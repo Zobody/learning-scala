@@ -1,6 +1,6 @@
 
 
-class Rational(n: Int, d: Int) {
+class Rational(n: Int, d: Int) { // a comment to induce change
 
 	require(d != 0)
 
