@@ -1,6 +1,6 @@
 
 
-class Rational(n: Int, d: Int) { // a comment to induce change
+class Rational(n: Int, d: Int) {
 
 	require(d != 0)
 
@@ -22,10 +22,22 @@ class Rational(n: Int, d: Int) { // a comment to induce change
 			this.denom * that.denom
 		)
 
+	def + (i: Int): Rational =
+		new Rational(
+			this.numer + i * this.denom,
+			this.denom
+		)
+
 	def - (that: Rational): Rational = 
 		new Rational(
 			this.numer * that.denom - that.numer * this.denom,
 			this.denom * that.denom
+		)
+
+	def - (i: Int): Rational =
+		new Rational(
+			this.numer - i * this.denom,
+			this.denom
 		)
 
 	def * (that: Rational): Rational = 
@@ -34,10 +46,22 @@ class Rational(n: Int, d: Int) { // a comment to induce change
 			this.denom * that.denom
 		)
 
+	def * (i: Int): Rational =
+		new Rational(
+			this.numer * i,
+			this.denom
+		)
+
 	def / (that: Rational): Rational = 
 		new Rational(
 			this.numer * that.denom,
 			this.denom * that.numer
+		)
+
+	def / (i: Int): Rational = 
+		new Rational(
+			this.numer,
+			this.denom * i
 		)
 
 	def unary_- : Rational =
@@ -46,17 +70,37 @@ class Rational(n: Int, d: Int) { // a comment to induce change
 			this.denom
 		)
 	
-	def < (that: Rational) =
+	def < (that: Rational): Boolean =
 		this.numer * that.denom < that.numer * this.denom
 
-	def > (that: Rational) =
+	def < (i: Int): Boolean = {
+		val that = new Rational(i)
+		this < that
+	}
+
+	def > (that: Rational): Boolean =
 		this.numer * that.denom > that.numer * this.denom
 
-	def max(that: Rational) = 
+	def > (i: Int): Boolean = {
+		val that = new Rational(i)
+		this > that
+	}
+
+	def max(that: Rational): Rational = 
 		if (this < that) that else this
 
-	def min(that: Rational) =
+	def max(i: Int): Rational = {
+		val that = new Rational(i)
+		this max that
+	}
+
+	def min(that: Rational): Rational =
 		if (this > that ) that else this
+
+	def min(i: Int): Rational = {
+		val that = new Rational(i)
+		this min that
+	}
 
 	private def gcd(a: Int, b: Int): Int =
 		if (b == 0) a else gcd(b, a % b)
