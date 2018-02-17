@@ -52,7 +52,7 @@ def gcd(x: Long, y: Long): Long = // This is shorter, functional and better, and
 
 
 // 7.3 For expressions
-println("7.3 For expressions")
+println("7.3 For expressions") // sanity check
 
 def spaceBetweenListings = { // To make output easier to read
 	println("")
@@ -156,3 +156,44 @@ grepB(".*for.*") // they use gcd, since this is regex, we can change it to any v
 spaceBetweenListings
 
 // We can also generate a new collection(or something like that)
+
+def scalaFiles = 
+	for {
+		file <- filesHere
+		if file.isFile
+		if file.getName.endsWith(".scala")
+	} yield file // for clauses yield body
+
+/*
+for (
+	file <- filesHere
+	if file.isFile
+	if file.getName.endsWith(".scala")
+)	{
+	yield file // Syntax error!
+}
+*/
+
+// Listing 7.10
+
+val forLineLengths = 
+	for {
+		file <- filesHere
+		if file.isFile
+		if file.getName.endsWith(".scala")
+		line <- fileLines(file)
+		trimmed = line.trim
+		if trimmed.matches(".*for.*") // alright, so apperantly, the book actually already had .*for.* matching, so that was uh unexpected
+	} yield trimmed.length
+
+
+for (file <- scalaFiles) {
+	println(file)
+}
+
+spaceBetweenListings
+
+for (i <- forLineLengths) 
+	println(i)
+
+spaceBetweenListings
