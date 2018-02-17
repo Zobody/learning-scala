@@ -122,13 +122,37 @@ spaceBetweenListings
 
 // Listing 7.8
 
-def fileLines(file: java.io.File): Unit = scala.io.Source.fromFile(file).getLines().toList
+def fileLines(file: java.io.File) = scala.io.Source.fromFile(file).getLines().toList
 
-def grep(pattern: String): Unit = {
-	for( 
+def grepA(pattern: String): Unit = {
+	for ( 
 		file <- filesHere
+		if file.isFile // without this, script trips up over folder named 'notAFile.scala', since it ends in .scala but it is not a file.
 		if file.getName.endsWith(".scala"); // SEMICOLON
-		line <- filesLines(file)
+		line <- fileLines(file)
 		if line.trim.matches(pattern)
-	)
+	) println(file +": "+ line.trim)
 }
+
+grepA(".*gcd.*")
+
+spaceBetweenListings
+
+// Listing 7.9
+
+def grepB(pattern: String): Unit = {
+	for { // notice the curly braces
+		file <- filesHere
+		if file.isFile
+		if file.getName.endsWith(".scala")
+		line <- fileLines(file)
+		trimmed = line.trim
+		if trimmed.matches(pattern)
+	} println(file +": "+ trimmed)
+}
+
+grepB(".*for.*") // they use gcd, since this is regex, we can change it to any valid matching pattern
+
+spaceBetweenListings
+
+// We can also generate a new collection(or something like that)
