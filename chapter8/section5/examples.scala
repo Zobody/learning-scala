@@ -9,7 +9,7 @@ val f = _ + _ // Does not compile
 */
 val f = (_: Int) + (_: Int)
 
-f(5,10)
+f(5,10) // First underscore is first argument, second one is second argument. Underscore arguments cannot be reused, so they should be used in simple cases like addition.
 
 // Now printing
 
