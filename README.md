@@ -1,2 +1,5 @@
 # learning-scala
-I am learning scala, this should keep the uh, code
+
+
+I am uploading here anything I write in scala, I am learning from "Programming in Scala 2nd Edition"
+It was last updated for Scala 2.8, so some samples might not fit for current Scala version
