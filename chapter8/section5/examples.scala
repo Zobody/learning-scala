@@ -13,6 +13,12 @@ f(5,10) // First underscore is first argument, second one is second argument. Un
 
 // Now printing
 
-println(someNumbers.filter(_ > 0))
-println(someNumbers.filter(x => x > 0))
-println(f(5,10))
+println(
+	someNumbers.filter(_ > 0)
+)
+println(
+	someNumbers.filter(x => x > 0)
+)
+println(
+	f(5,10)
+)

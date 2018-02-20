@@ -22,5 +22,9 @@ someNumbers.filter(x => x > 0)
 
 // Putting these in println()
 
-println(someNumbers.filter((x) => x > 0))
-println(someNumbers.filter(x => x > 0))
+println(
+	someNumbers.filter((x) => x > 0)
+)
+println(
+	someNumbers.filter(x => x > 0)
+)
