@@ -40,4 +40,10 @@ someNumbers.foreach(println) // We can leave off _, if we write a partially appl
 val c = sum // underscore left out, we get an error
 */
 
+val d = sum _
+
+d(10,20,30)
+
+// Printing...
+println(d(10,20,30))
 
