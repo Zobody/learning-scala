@@ -10,7 +10,7 @@ myAssert(() => 5 > 3) // This is weird
 // Listing 9.5 : Using a by-name parameter.
 
 def byNameAssert(predicate: => Boolean) = 
-	if (assertationsEnabled && !predicate())
+	if (assertationsEnabled && !predicate
 		throw new AssertionError
 
 byNameAssert(5 > 3) // Ah, a lot better
