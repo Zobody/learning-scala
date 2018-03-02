@@ -21,3 +21,7 @@ withPrintWriter(
 	new File("date.txt"),
 	writer => writer.println(new java.util.Date)
 )
+
+println("Hello, World!")
+
+println{"Hello, World!"}
