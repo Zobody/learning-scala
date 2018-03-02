@@ -1,4 +1,6 @@
 
+import java.io._
+
 def twice(op: Double => Double, x: Double) = op(op(x))
 
 println(
