@@ -1,4 +1,7 @@
 
+val hoursEnglish: List[String] = List("twelve", "one", "two", "three", "four", "five", "six", "seven", "eigth", "nine", "ten", "eleven", "twelve")
+val minutesTensEnglish: List[String] = List("oh", "???", "twenty", "thirty", "forty", "fifty") // minutesTensEnglish(1) is invalid 
+val minutesOnes: List[String] = List("", "one", "two", "three", "four", "five", "six", "seven", "eigth", "nine", "ten", "eleven", "twelve", "thirteen", "forteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen")
 
 def timeToText(input: String) : String = {
 
