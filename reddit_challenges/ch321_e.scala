@@ -26,8 +26,8 @@ def timeToText(input: String) : String = {
 	}
 
 	val output: String = {
-		String.join(" ", "It's", outputHourPart, outputMinutePart, meridiem)
-		// "It's " + outputHourPart + " " + outputMinutePart + " " + meridiem 
+		//String.join(" ", "It's", outputHourPart, outputMinutePart, meridiem)
+		"It's " + outputHourPart + " " + outputMinutePart + {if (outputMinutePart != "") " " else ""} + meridiem 
 	}
 
 	// temp
@@ -38,6 +38,10 @@ def timeToText(input: String) : String = {
 	println(meridiem)
 	println(outputMinutePart)
 	println(outputHourPart)
+	
+	print("`")
+	print(outputMinutePart)
+	println("`")
 	*/
 	output
 }
