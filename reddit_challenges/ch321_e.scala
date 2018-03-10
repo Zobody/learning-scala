@@ -31,12 +31,14 @@ def timeToText(input: String) : String = {
 	}
 
 	// temp
+	/*
 	println(hourPart + " | " + minutesPart) 
 	println(minutesInt)
 	println(minutesTens + " | " + minutesOnes)
 	println(meridiem)
 	println(outputMinutePart)
 	println(outputHourPart)
+	*/
 	output
 }
 
