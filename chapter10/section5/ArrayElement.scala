@@ -1,5 +1,5 @@
-// Listing 10.3 : Defining ArrayElement as a subclass of Element.
+// Listing 10.4 : Overriding a parameterless method with a field.
 
 class ArrayElement(conts: Array[String]) extends Element {
-	def contents: Array[String] = conts
+	val contents: Array[String] = conts
 }
