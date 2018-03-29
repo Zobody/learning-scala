@@ -1,5 +1,7 @@
-// Listing 10.4 : Overriding a parameterless method with a field.
+// Listing 10.5 : Defining contents as a parametric field.
 
-class ArrayElement(conts: Array[String]) extends Element {
-	val contents: Array[String] = conts
+class ArrayElement(
+	val contents: Array[String]
+) extends Element {
+
 }
