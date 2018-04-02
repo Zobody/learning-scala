@@ -1,7 +1,5 @@
-// Listing 10.5 : Defining contents as a parametric field.
-
-class ArrayElement(
-	val contents: Array[String]
-) extends Element {
-
+class ArrayElement extends Element {
+	override def demo() {
+		println("ArrayElement's implementation invoked")
+	}
 }
