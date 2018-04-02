@@ -1,0 +1,2 @@
+
+class UniformElement extends Element
