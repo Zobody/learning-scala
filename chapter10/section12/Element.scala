@@ -1,4 +1,4 @@
-
+// Listing 10.9 : Class Element with above, beside, and toString.
 
 abstract class Element {
 	def contents: Array[String]
