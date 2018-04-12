@@ -1,7 +1,7 @@
-// Listing 10.7 : Declaring a final method.
+// Listing 10.8 : Declaring a final class.
 
-class ArrayElement extends Element {
-	final override def demo() {
+final class ArrayElement extends Element {
+	override def demo() {
 		println("ArrayElement's implementation invoked")
 	}
 }
