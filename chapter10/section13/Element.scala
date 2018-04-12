@@ -1,4 +1,6 @@
-// Listing 10.9 : Class Element with above, beside, and toString.
+// Listing 10.11 : Class Element refactored to use factory methods.
+
+import Element.elem
 
 abstract class Element {
 	def contents: Array[String]
@@ -6,7 +8,7 @@ abstract class Element {
 	def width: Int = if (height == 0) 0 else contents(0).length
 
 	def above(that: Element): Element = 
-		new ArrayElement(this.contents ++ that.contents)
+		elem(this.contents ++ that.contents)
 	/*
 	def beside(that: Element): Element = {
 		val contents = new Array[String](this.contents.length)
@@ -17,7 +19,7 @@ abstract class Element {
 	*/
 
 	def beside(that: Element): Element = {
-		new ArrayElement(
+		elem(
 			for (
 				(line1, line2) <- this.contents zip that.contents
 			) yield {line1 + line2}
