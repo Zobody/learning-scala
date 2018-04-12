@@ -27,3 +27,16 @@ abstract class Element {
 	override def toString = contents mkString "\n"
 
 }
+
+// Listing 10.10 : A factory object with factory methods.
+
+object Element {
+	def elem(contents: Array[String]): Element = 
+		new ArrayElement(contents)
+
+	def elem(chr: Char, width: Int, height: Int): Element = 
+		new UniformElement(chr, width, height)
+
+	def elem(line: String): Element = 
+		new LineElement(line)
+}
