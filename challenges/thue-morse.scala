@@ -8,13 +8,18 @@
 object ThueMorse {
 
 	def main(input: Array[String]) {
-		var string = input(0)
-		for (i <- 0 until input(1).toInt) {
-			string = string + invert(string)
-		}
+		val string = compute(
+			input(0),
+			input(1).toInt
+		)
 		println(string)
 	}
 
-	def invert(input: String) : String = input.map(s => {if (s == 'A') 'B' else 'A'})
+	def invert(input: String) : String = input map (s => {if (s == 'A') 'B' else 'A'})
+
+	def compute(input: String, times: Int): String = {
+		if (times == 0) input
+		else compute(input + invert(input), times - 1)
+	}
 
 }
