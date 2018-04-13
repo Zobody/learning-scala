@@ -5,8 +5,16 @@
 	This program will take in input with either 0s and 1s, or As and Bs, and return input + !input
 */
 
-def ThueMorse(input: String) : String = {
-	"ABBA"
-}
+object ThueMorse {
 
-println(ThueMorse("AB"))
+	def main(input: Array[String]) {
+		var string = input(0)
+		for (i <- 0 until input(1).toInt) {
+			string = convert(string)
+		}
+		println(string)
+	}
+
+	def convert(input: String) : String = input.map(s => {if (s == "A") "AB" else "BA"})
+
+}
