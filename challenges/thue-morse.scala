@@ -10,11 +10,11 @@ object ThueMorse {
 	def main(input: Array[String]) {
 		var string = input(0)
 		for (i <- 0 until input(1).toInt) {
-			string = convert(string)
+			string = string + invert(string)
 		}
 		println(string)
 	}
 
-	def convert(input: String) : String = input.map(s => {if (s == "A") "AB" else "BA"})
+	def invert(input: String) : String = input.map(s => {if (s == 'A') 'B' else 'A'})
 
 }
