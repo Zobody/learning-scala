@@ -13,13 +13,13 @@ object Spiral {
 			def verticalBar = elem('|', 1, sp.height)
 			def horizontalBar = elem('-', sp.width, 1)
 
-			if (direction == 0)
+			if (direction == 0) // top 
 				(corner beside horizontalBar) above (sp beside space)
-			else if (direction == 1)
+			else if (direction == 1) // right
 				(sp above space) beside (corner above verticalBar)
-			else if (direction == 2)
+			else if (direction == 2) // bottom
 				(space beside sp) above (horizontalBar beside corner)
-			else
+			else // left
 				(verticalBar above corner) beside (space above sp)
 		}
 	}
