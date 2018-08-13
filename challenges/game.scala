@@ -3,13 +3,36 @@ import scala.collection.mutable.ArrayBuffer
 
 object GameTest extends App {
 
-	class Universe(val field: List[Creature]) {
+	class Universe(val field: List[Creature], state: String) {
 
 		def update(input: String): Universe = {
 			this
 		}
 
 		def output(outputUniverse: Universe): Unit = {
+
+			if (outputUniverse.state == "REGULAR") {
+				println("-"*15)
+				println()
+				println("On the field, currently there are: ")
+
+				for (creature <- field) {
+					val name = if (creature.isInstanceOf[Player]) "Player" else creature.name
+					val index = field.indexOf(creature)
+					println("[" + index + "] "  name + "with the following stats: HP: " + creature.health + ", ATK: " + creature.attack + ", DEF: " + creature.defense)
+				}
+
+				println()
+				println("-"*15)
+				println("You can do one of these things: attack <N>, rest")
+				print("> ")
+			} else if (outputUniverse.state == "BATTLE") {
+				println("-"*15)
+				println()
+				println("You deal " + field.head.attack + " damage to ")
+			}
+
+			
 
 		}
 
@@ -52,7 +75,7 @@ object GameTest extends App {
 		val monster2 = new RegularMonster(5, 1, 5, "Nightbody")
 		val monster3 = new RegularMonster(3, 1, 3, "Dawnbody")
 
-		new Universe(List(player, monster1, monster2, monster3))
+		new Universe(List(player, monster1, monster2, monster3), "REGULAR")
 	}
 
 	def receiveInput(): String = scala.io.StdIn.readLine()
