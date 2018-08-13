@@ -13,7 +13,7 @@ object GameTest extends App {
 		def isDead: Boolean = health <= 0
 	}
 
-	class Player(val health: Int, val offense: Int, val defense: Int) extends Creature(health, offense, defense) {
+	class Player(override val health: Int, override val offense: Int, override val defense: Int) extends Creature(health, offense, defense) {
 		def attack(that: Creature): Creature = {
 			that.receiveDamage(this.offense)
 		}
@@ -32,9 +32,9 @@ object GameTest extends App {
 		}
 	}
 
-	abstract class Monster(val health: Int, val offense: Int, val defense: Int, val name: String) extends Creature(health, offense, defense)
+	abstract class Monster(override val health: Int, override val offense: Int, override val defense: Int, override val name: String) extends Creature(health, offense, defense)
 
-	class RegularMonster(val health: Int, val offense: Int, val defense: Int, val name: String) extends Monster(health, offense, defense, name) {
+	class RegularMonster( override val health: Int, override val offense: Int, override val defense: Int, override val name: String) extends Monster(health, offense, defense, name) {
 		def attack(that: Creature): Creature = {
 			that.receiveDamage(this.offense)
 		}
@@ -68,12 +68,12 @@ object GameTest extends App {
 
 				for (creature <- field) {
 					val name = creature match {
-						case m: Monster => creature.name
+						case m: Monster => creature.asInstanceOf[Monster].name
 						case p: Player => "Player"
 						case _ => "BAD_DATA"
 					}
-					val index = field.indexOf(creature)
-					println("[" + index + "] "  name + "with the following stats: HP: " + creature.health + ", ATK: " + creature.attack + ", DEF: " + creature.defense)
+					val index: String = (field.indexOf(creature)).toString
+					println("[" + index + "] " + name + "with the following stats: HP: " + creature.health + ", ATK: " + creature.attack + ", DEF: " + creature.defense)
 				}
 
 				println()
