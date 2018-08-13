@@ -13,10 +13,6 @@ object GameTest extends App {
 
 		}
 
-		def init(): Universe = {
-			
-		}
-
 		abstract class Creature(val health: Int, val attack: Int, val defense: Int) {
 
 			def receiveDamage(damage: Int): Creature = {
@@ -48,6 +44,15 @@ object GameTest extends App {
 				that.receiveDamage(this.attack)
 			}
 		}
+	}
+
+	def init(): Universe = {
+		val player = new Player(10, 2, 5)
+		val monster1 = new RegularMonster(3, 5, 0, "Wispboy")
+		val monster2 = new RegularMonster(5, 1, 5, "Nightbody")
+		val monster3 = new RegularMonster(3, 1, 3, "Dawnbody")
+
+		new Universe(List(player, monster1, monster2, monster3))
 	}
 
 	def receiveInput(): String = scala.io.StdIn.readLine()
