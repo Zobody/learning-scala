@@ -38,29 +38,47 @@ object GameTest extends App {
 
 		abstract class Creature(val health: Int, val attack: Int, val defense: Int) {
 
-			def receiveDamage(damage: Int): Creature = {
-				val newDefense = if (defense > damage) defense - damage else 0
-				val newHealth = if (damage > defense) health - (damage - defense) else health
-
-				Creature(newHealth, attack, newDefense)
-			}
-
-			def directDamage(damage: Int): Creature = {
-				val newHealth = health - damage
-
-				Creature(newHealth, attack, defense)
-			}
+			def receiveDamage: Int => Creature
+			def directDamage: Int => Creature
 
 			def attack: Creature => Creature
+
+			def isDead: Boolean = health <= 0
 		}
 
 		class Player(val health: Int, val attack: Int, val defense: Int) extends Creature(health, attack, defense) {
 			def attack(that: Creature): Creature = {
 				that.receiveDamage(this.attack)
 			}
+
+			def receiveDamage(damage: Int): Player = {
+				val newDefense = if (defense > damage) defense - damage else 0
+				val newHealth = if (damage > defense) health - (damage - defense) else health
+
+				Player(newHealth, attack, newDefense)
+			}
+
+			def directDamage(damage: Int): Player = {
+				val newHealth = health - damage
+
+				Player(newHealth, attack, defense)
+			}
 		}
 
-		abstract class Monster(val health: Int, val attack: Int, val defense: Int, val name: String) extends Creature(health, attack, defense) 
+		abstract class Monster(val health: Int, val attack: Int, val defense: Int, val name: String) extends Creature(health, attack, defense) {
+			def receiveDamage(damage: Int): Monster = {
+				val newDefense = if (defense > damage) defense - damage else 0
+				val newHealth = if (damage > defense) health - (damage - defense) else health
+
+				Monster(newHealth, attack, newDefense, name)
+			}
+
+			def directDamage(damage: Int): Monster = {
+				val newHealth = health - damage
+
+				Monster(newHealth, attack, defense, name)
+			}
+		}
 
 		class RegularMonster(val health: Int, val attack: Int, val defense: Int, val name: String) extends Monster(health, attack, defense, name) {
 			def attack(that: Creature): Creature = {
