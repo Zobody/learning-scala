@@ -3,7 +3,11 @@ import scala.collection.mutable.ArrayBuffer
 
 object GameTest extends App {
 
-	abstract class Creature(val health: Int, val offense: Int, val defense: Int) {
+	abstract class Creature {
+
+		def health: Int
+		def offense: Int
+		def defense: Int
 
 		def receiveDamage: Int => Creature
 		def directDamage: Int => Creature
@@ -13,40 +17,42 @@ object GameTest extends App {
 		def isDead: Boolean = health <= 0
 	}
 
-	class Player(override val health: Int, override val offense: Int, override val defense: Int) extends Creature(health, offense, defense) {
+	class Player(val health: Int, val offense: Int, val defense: Int) extends Creature {
 		def attack(that: Creature): Creature = {
 			that.receiveDamage(this.offense)
 		}
 
-		def receiveDamage(damage: Int): Player = {
+		def receiveDamage(damage: Int): Creature = {
 			val newDefense = if (defense > damage) defense - damage else 0
 			val newHealth = if (damage > defense) health - (damage - defense) else health
 
 			new Player(newHealth, offense, newDefense)
 		}
 
-		def directDamage(damage: Int): Player = {
+		def directDamage(damage: Int): Creature = {
 			val newHealth = health - damage
 
 			new Player(newHealth, offense, defense)
 		}
 	}
 
-	abstract class Monster(override val health: Int, override val offense: Int, override val defense: Int, override val name: String) extends Creature(health, offense, defense)
+	abstract class Monster extends Creature {
+		def name: String
+	}
 
-	class RegularMonster( override val health: Int, override val offense: Int, override val defense: Int, override val name: String) extends Monster(health, offense, defense, name) {
+	class RegularMonster(val health: Int, val offense: Int, val defense: Int, val name: String) extends Monster {
 		def attack(that: Creature): Creature = {
 			that.receiveDamage(this.offense)
 		}
 
-		def receiveDamage(damage: Int): RegularMonster = {
+		def receiveDamage(damage: Int): Creature = {
 			val newDefense = if (defense > damage) defense - damage else 0
 			val newHealth = if (damage > defense) health - (damage - defense) else health
 
 			new RegularMonster(newHealth, offense, newDefense, name)
 		}
 
-		def directDamage(damage: Int): RegularMonster = {
+		def directDamage(damage: Int): Creature = {
 			val newHealth = health - damage
 
 			new RegularMonster(newHealth, offense, defense, name)
