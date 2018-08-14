@@ -9,10 +9,10 @@ object GameTest extends App {
 		def offense: Int
 		def defense: Int
 
-		def receiveDamage: Int => Creature
-		def directDamage: Int => Creature
+		def receiveDamage(damage: Int): Creature
+		def directDamage(damage: Int):  Creature
 
-		def attack: Creature => Creature
+		def attack(that: Creature):  Creature
 
 		def isDead: Boolean = health <= 0
 	}
@@ -62,7 +62,9 @@ object GameTest extends App {
 	class Universe(val field: List[Creature], state: String) {
 
 		def update(input: String): Universe = {
-			this
+			if (state == "REGULAR") {
+				if (input.startsWith)
+			}
 		}
 
 		def output(): Unit = {
@@ -79,7 +81,7 @@ object GameTest extends App {
 						case _ => "BAD_DATA"
 					}
 					val index: String = (field.indexOf(creature)).toString
-					println("[" + index + "] " + name + "with the following stats: HP: " + creature.health + ", ATK: " + creature.attack + ", DEF: " + creature.defense)
+					println("[" + index + "] " + name + "with the following stats: HP: " + creature.health + ", ATK: " + creature.offense + ", DEF: " + creature.defense)
 				}
 
 				println()
@@ -89,7 +91,7 @@ object GameTest extends App {
 			} else if (state == "BATTLE") {
 				println("-"*15)
 				println()
-				println("You deal " + field.head.attack + " damage to ")
+				println("You deal " + field.head.offense + " damage to ")
 			}
 
 			
