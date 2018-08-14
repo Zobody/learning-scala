@@ -59,11 +59,31 @@ object GameTest extends App {
 		}
 	}
 
-	class Universe(val field: List[Creature], state: String) {
+	class Universe(val field: List[Creature], val state: String) {
 
 		def update(input: String): Universe = {
-			if (state == "REGULAR") {
-				if (input.startsWith)
+			val inputArgs: Array[String] = input.split(" ")
+			
+			state match {
+				case "REGULAR" => {
+					inputArgs(0).toLowerCase match {
+						case "attack" => {
+							val target = inputArgs(1).toInt
+							// field.head.attack(field(target))
+							val fieldAfterAttack = field map (creature => {
+								if (creature == field.head) creature.attack(field(target)) else if (field.indexOf(creature) == target) creature.attack(field.head) else creature
+							})
+
+							val nonDeadField = fieldAfterAttack.filter(creature => !creature.isDead)
+
+							val newState = if (fieldAfterAttack.head.isDead) "GAMEOVER" else if (nonDeadField.length < fieldAfterAttack.length) "REGULAR" else "BATTLE"
+
+							new Universe(nonDeadField, newState)
+						}
+						case _ => this
+					}
+				}
+				case _ => this
 			}
 		}
 
@@ -80,7 +100,7 @@ object GameTest extends App {
 						case p: Player => "Player"
 						case _ => "BAD_DATA"
 					}
-					val index: String = (field.indexOf(creature)).toString
+					val index: String = field.indexOf(creature).toString
 					println("[" + index + "] " + name + "with the following stats: HP: " + creature.health + ", ATK: " + creature.offense + ", DEF: " + creature.defense)
 				}
 
@@ -93,12 +113,7 @@ object GameTest extends App {
 				println()
 				println("You deal " + field.head.offense + " damage to ")
 			}
-
-			
-
 		}
-
-		
 	}
 
 	def init(): Universe = {
