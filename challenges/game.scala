@@ -107,7 +107,7 @@ class Universe(val field: List[Creature], val state: State) {
 						*/
 
 						val targetCreature = field(inputArgs(1).toInt)
-						val newUniverse = newUniverse(this.field, new State("Battle", targetCreature))
+						val newUniverse = newUniverse(this.field, new State("BATTLE", targetCreature))
 						newUniverse.update("attack")
 					}
 					case _ => this // If it is an invalid command, we just repeat exact same thing
