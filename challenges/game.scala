@@ -10,7 +10,7 @@ abstract class Creature {
 	def receiveDamage(damage: Int): Creature
 	def directDamage(damage: Int):  Creature
 
-	def attack(that: Creature):  Creature
+	def attack(that: Creature): Creature // Always, without exceptions, returns the target after the attack
 
 	def isDead: Boolean = health <= 0
 }
@@ -84,6 +84,7 @@ class Universe(val field: List[Creature], val state: State) {
 			case "REGULAR" => {
 				inputArgs(0).toLowerCase match {
 					case "attack" => {
+						/*
 						val target = inputArgs(1).toInt
 						// field.head.attack(field(target))
 						val fieldAfterAttack = field map (creature => {
@@ -93,44 +94,60 @@ class Universe(val field: List[Creature], val state: State) {
 						val nonDeadField = fieldAfterAttack.filter(creature => !creature.isDead)
 						// if (fieldAfterAttack.head.isDead) "GAMEOVER" else if (nonDeadField.length < fieldAfterAttack.length) "REGULAR" else "BATTLE"
 						val newState = {
-							if (fieldAfterAttack.head.isDead) {new State("GAMEOVER")}
+							if (fieldAfterAttack.head.isDead) {
+								new State("GAMEOVER")
+							} else if (nonDeadField.length < fieldAfterAttack.length) {
+								new State("REGULAR")
+							} else {
+								new State("BATTLE", nonDeadField(target))
+							}
 						} 
 
 						new Universe(nonDeadField, newState)
+						*/
+
+						val targetCreature = field(inputArgs(1).toInt)
+						val newUniverse = newUniverse(this.field, new State("Battle", targetCreature))
+						newUniverse.update("attack")
 					}
-					case _ => this
+					case _ => this // If it is an invalid command, we just repeat exact same thing
 				}
 			}
-			case _ => this
+			case "BATTLE" => {
+				inputArgs(0).toLowerCase match {
+					case "attack" => {
+						val fieldAfterAttack = field map (creature => {
+							if (creature == field.head) {
+								creature.attack(state.target)
+							} else if (creature == state.target) {
+								creature.attack(field.head)
+							} else {
+								creature
+							}
+						})
+
+						val nonDeadField = fieldAfterAttack.filter(creature => !creature.isDead)
+
+						val newState = {
+							if (fieldAfterAttack.head.isDead) {
+								new State("GAMEOVER")
+							} else if (nonDeadField.length < fieldAfterAttack.length) {
+								new State("REGULAR")
+							} else {
+								new State("BATTLE", field.head.attack(state.target))
+							}
+						}
+
+						new Universe(nonDeadField, newState)
+					}
+				}
+
+			}
+			case _ => this // if it is an invalid state, game is effectively dead, as it will constantly just loop. This cannot happen though, as State requires the game to be in a valid state.
 		}
 	}
 
 	def output(): Unit = {
-
-		if (state == "REGULAR") {
-			println("-"*15)
-			println()
-			println("On the field, currently there are: ")
-
-			for (creature <- field) {
-				val name = creature match {
-					case m: Monster => creature.asInstanceOf[Monster].name
-					case p: Player => "Player"
-					case _ => "BAD_DATA"
-				}
-				val index: String = field.indexOf(creature).toString
-				println("[" + index + "] " + name + "with the following stats: HP: " + creature.health + ", ATK: " + creature.offense + ", DEF: " + creature.defense)
-			}
-
-			println()
-			println("-"*15)
-			println("You can do one of these things: attack <N>, rest")
-			print("> ")
-		} else if (state == "BATTLE") {
-			println("-"*15)
-			println()
-			println("You deal " + field.head.offense + " damage to ")
-		}
 	}
 }
 
@@ -142,7 +159,7 @@ object GameTest extends App {
 		val monster2 = new RegularMonster(5, 1, 5, "Nightbody")
 		val monster3 = new RegularMonster(3, 1, 3, "Dawnbody")
 
-		new Universe(List(player, monster1, monster2, monster3), "REGULAR")
+		new Universe(List(player, monster1, monster2, monster3), new State("REGULAR"))
 	}
 
 	def receiveInput(): String = scala.io.StdIn.readLine()
