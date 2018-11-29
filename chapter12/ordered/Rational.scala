@@ -69,7 +69,11 @@ class Rational(n: Int, d: Int) extends Ordered[Rational] {
 			-this.numer,
 			this.denom
 		)
-	
+
+	def compare(that: Rational): Int = 
+		(this.numer * that.denom) - (that.numer * this.denom)
+
+	/*
 	def < (that: Rational): Boolean =
 		this.numer * that.denom < that.numer * this.denom
 
@@ -85,7 +89,7 @@ class Rational(n: Int, d: Int) extends Ordered[Rational] {
 		val that = new Rational(i)
 		this > that
 	}
-
+	*/
 	def max(that: Rational): Rational = 
 		if (this < that) that else this
 
