@@ -1,6 +1,6 @@
 
 
-class Rational(n: Int, d: Int) {
+class Rational(n: Int, d: Int) extends Ordered[Rational] {
 
 	require(d != 0)
 
