@@ -10,6 +10,7 @@ abstract class Element {
 	def above(that: Element): Element = {
 		val this1 = this widen that.width
 		val that1 = that widen this.width // could replace with that widen width
+		assert(this1.width == that1.width)
 		elem(this1.contents ++ that1.contents)
 	}
 	/*
@@ -31,15 +32,16 @@ abstract class Element {
 		)
 	}
 
-	def widen(w: Int): Element = 
-		if (w <= width) this
+	private def widen(w: Int): Element = 
+		if (w <= width) 
+			this
 		else {
 			val left = elem(' ', (w - width) / 2, height)
 			val right = elem(' ', w - width - left.width, height)
 			left beside this beside right
-		}
+		} ensuring (w <= _.width) // underscore is placeholder of result of widen function
 
-	def heighten(h: Int): Element = 
+	private def heighten(h: Int): Element = 
 		if (h <= height) this
 		else {
 			val top = elem(' ', width, (h - height) / 2)
